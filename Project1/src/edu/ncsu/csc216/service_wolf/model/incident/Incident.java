@@ -20,6 +20,18 @@ import edu.ncsu.csc216.service_wolf.model.command.Command;
  *
  */
 public class Incident {
+	/** Current state for the incident */
+	private IncidentState currentState;
+	/** Final instance of the NewState inner class */
+	private final IncidentState newState = new NewState;
+	/** Final instance of the InProgressState inner class */
+	private final IncidentState inProgressState = new InProgressState;
+	/** Final instance of the OnHoldState inner class */
+	private final IncidentState onHoldState = new OnHoldState;
+	/** Final instance of the ResolvedState inner class */
+	private final IncidentState resolvedState = new ResolvedState;
+	/** Final instance of the CanceledState inner class */
+	private final IncidentState canceledState = new CanceledState;
 	/** int representing the id of the incident */
 	private int incidentId;
 	/** String containing the title of the incident */
@@ -72,23 +84,36 @@ public class Incident {
 	private static int counter = 0;
 
 	/**
-	 * @param title
-	 * @param caller
-	 * @param message
+	 * Constructs a Incident from the provided title, caller, and message.
+	 * 
+	 * @param title   String containing the title of the incident
+	 * @param caller  String containing the name or id of the caller
+	 * @param message String containing the message with more info about the
+	 *                incident
+	 * @throws IllegalArgumentException If any of the parameters are null or empty
+	 *                                  strings, then an IllegalArgumentException is
+	 *                                  thrown.
 	 */
 	public Incident(String title, String caller, String message) {
 
 	}
 
 	/**
-	 * @param id
-	 * @param state
-	 * @param title
-	 * @param caller
-	 * @param reopenCount
-	 * @param owner
-	 * @param statusDetails
-	 * @param incidentLog
+	 * Constructs an Incident with data for all fields passed. Utilized by the
+	 * ServiceGroupReader class to load existing Incidents from text files
+	 * 
+	 * @param id            int value that is the incident's id
+	 * @param state         String representation of the State of the Incident
+	 * @param title         String containing the title of the Incident
+	 * @param caller        String containing the name or id of the caller
+	 * @param reopenCount   int containing the number of times an Incident has been
+	 *                      reopened
+	 * @param owner         String containing the name / id of the owner
+	 * @param statusDetails String containing the details about the Incident's
+	 *                      status
+	 * @param incidentLog   ArrayList of Strings containing the messages that have
+	 *                      been added to the incident log
+	 * @throws IllegalArgumentException If there is any issue with the parameters
 	 */
 	public Incident(int id, String state, String title, String caller, int reopenCount,
 			String owner, String statusDetails, ArrayList<String> incidentLog) {
@@ -96,6 +121,8 @@ public class Incident {
 	}
 
 	/**
+	 * Getter for the id of this
+	 * 
 	 * @return the incidentId
 	 */
 	public int getId() {
@@ -103,6 +130,8 @@ public class Incident {
 	}
 
 	/**
+	 * Setter for the id of this
+	 * 
 	 * @param incidentId the incidentId to set
 	 */
 	private void setId(int incidentId) {
@@ -110,6 +139,8 @@ public class Incident {
 	}
 
 	/**
+	 * Getter for the this Incident title
+	 * 
 	 * @return the title
 	 */
 	public String getTitle() {
@@ -117,6 +148,8 @@ public class Incident {
 	}
 
 	/**
+	 * Setter for this Incident title
+	 * 
 	 * @param title the title to set
 	 */
 	private void setTitle(String title) {
@@ -124,6 +157,27 @@ public class Incident {
 	}
 
 	/**
+	 * Getter for this Incident state
+	 * 
+	 * @return a String containing the State of the Incident
+	 */
+	public String getState() {
+
+	}
+
+	/**
+	 * Setter for currentState field. To be used in the constructor for file i/o.
+	 * Finds the proper State for the String containing the name of the State
+	 * 
+	 * @param state
+	 */
+	public void setState(String state) {
+
+	}
+
+	/**
+	 * Getter for the caller of this Incident
+	 * 
 	 * @return the caller
 	 */
 	public String getCaller() {
@@ -131,6 +185,8 @@ public class Incident {
 	}
 
 	/**
+	 * Setter for the caller of this Incident
+	 * 
 	 * @param caller the caller to set
 	 */
 	private void setCaller(String caller) {
@@ -138,6 +194,8 @@ public class Incident {
 	}
 
 	/**
+	 * Getter for the reopenCount of this Incident
+	 * 
 	 * @return the reopenCount
 	 */
 	public int getReopenCount() {
@@ -145,6 +203,8 @@ public class Incident {
 	}
 
 	/**
+	 * Setter for the reopenCount of this Incident
+	 * 
 	 * @param reopenCount the reopenCount to set
 	 */
 	private void setReopenCount(int reopenCount) {
@@ -152,6 +212,8 @@ public class Incident {
 	}
 
 	/**
+	 * Getter for the owner of this Incident
+	 * 
 	 * @return the owner
 	 */
 	public String getOwner() {
@@ -159,6 +221,8 @@ public class Incident {
 	}
 
 	/**
+	 * Setter for the owner of this Incident
+	 * 
 	 * @param owner the owner to set
 	 */
 	private void setOwner(String owner) {
@@ -166,6 +230,8 @@ public class Incident {
 	}
 
 	/**
+	 * Getter for the statusDetails of this Incident
+	 * 
 	 * @return the statusDetails
 	 */
 	public String getStatusDetails() {
@@ -173,6 +239,8 @@ public class Incident {
 	}
 
 	/**
+	 * Setter for the statusDetails of this Incident
+	 * 
 	 * @param statusDetails the statusDetails to set
 	 */
 	private void setStatusDetails(String statusDetails) {
@@ -180,13 +248,18 @@ public class Incident {
 	}
 
 	/**
-	 * @return the incidentLog
+	 * Gets the ArrayList of Strings incidentLog as a String
+	 * 
+	 * @return the incidentLog messages as a String
 	 */
 	public String getIncidentLogMessage() {
 		return null;
 	}
 
 	/**
+	 * Adds a String message to the ArrayList of Strings containing the log of
+	 * messages for this Incident
+	 * 
 	 * @param incidentLog the incidentLog to set
 	 */
 	private int addMessageToIncidentLog(String message) {
@@ -194,28 +267,40 @@ public class Incident {
 	}
 
 	/**
-	 * 
+	 * Increments the counter for Incident id's that have been assigned. Always
+	 * called by constructor when new Incident is created.
 	 */
 	public static void incrementCounter() {
 		counter++;
 	}
 
 	/**
-	 * @param value
+	 * Setter for the counter
+	 * 
+	 * @param value the int value being assigned to the counter
 	 */
 	public static void setCounter(int value) {
 
 	}
 
 	/**
-	 *
+	 * Overrides the default toString for a class specific implementation of the
+	 * method
 	 */
+	@Override
 	public String toString() {
 		return null;
 	}
 
 	/**
-	 * @param c
+	 * Calls the updateState method for this Incident's currentState. Can throw the
+	 * UnsupportedOperationException from the updateState method if thrown due to an
+	 * attempt to change to an illegal state.
+	 * 
+	 * @param c the command that is to be passed to the updateState method
+	 * @throws UnsupportedOperationException if the currentState determines that the
+	 *                                       transition, as encapsulated by the
+	 *                                       Command, is not appropriate for the FSM
 	 */
 	public void update(Command c) {
 
