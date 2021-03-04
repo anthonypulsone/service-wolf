@@ -62,14 +62,14 @@ public class ServiceGroup {
 	 * @param id
 	 * @return
 	 */
-	public Incident getIncidentsByID(int id) {
+	public Incident getIncidentsById(int id) {
 		return null;
 	}
 	
 	/**
 	 * @param id
 	 */
-	public void deleteIncidentByID(int id) {
+	public void deleteIncidentById(int id) {
 		
 	}
 	

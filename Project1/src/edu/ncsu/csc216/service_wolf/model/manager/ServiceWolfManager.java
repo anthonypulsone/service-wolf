@@ -7,6 +7,8 @@ import edu.ncsu.csc216.service_wolf.model.incident.Incident;
 import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 
 /**
+ * 
+ * 
  * @author anthonypulsone
  *
  */
