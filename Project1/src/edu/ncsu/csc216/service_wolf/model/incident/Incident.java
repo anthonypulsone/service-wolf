@@ -55,7 +55,7 @@ public class Incident {
 	/** A constant string for the in progress state */
 	public static final String IN_PROGRESS_NAME = "In Progress";
 	/** A constant string for the on hold state */
-	public static final String ON_HOLD = "On Hold";
+	public static final String ON_HOLD_NAME = "On Hold";
 	/** A constant string for the resolved state */
 	public static final String RESOLVED_NAME = "Resolved";
 	/** A constant string for the canceled state */
@@ -257,7 +257,7 @@ public class Incident {
 	 * 
 	 * @return the incidentLog messages as a String
 	 */
-	public String getIncidentLogMessage() {
+	public String getIncidentLogMessages() {
 		return null;
 	}
 

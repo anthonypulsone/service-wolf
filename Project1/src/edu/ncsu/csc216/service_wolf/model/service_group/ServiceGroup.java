@@ -2,6 +2,7 @@ package edu.ncsu.csc216.service_wolf.model.service_group;
 
 import java.util.ArrayList;
 
+import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
 
 /**
@@ -40,7 +41,7 @@ public class ServiceGroup {
 	 * @return
 	 */
 	public String getServiceGroupName() {
-		return null;
+		return serviceGroupName;
 	}
 	
 	/**
