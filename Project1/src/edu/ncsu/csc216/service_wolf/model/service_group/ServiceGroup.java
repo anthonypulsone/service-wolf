@@ -89,20 +89,24 @@ public class ServiceGroup {
 	 * @param id the id of the Incident that is being searched for
 	 * @return the Incident if found or null if not
 	 */
-	public Incident getIncidentsById(int id) {
+	public Incident getIncidentById(int id) {
 		return null;
 	}
 
 	/**
-	 * @param id
+	 * Delete an incident in the ServiceGroup list from a provided id
+	 * 
+	 * @param id the id of the incident you are deleting
 	 */
 	public void deleteIncidentById(int id) {
 
 	}
 
 	/**
-	 * @param id
-	 * @param c
+	 * Finds the Incident with the given id and update it by passing in the given Command.
+	 * 
+	 * @param id the id of the Incident you are passing a the command to
+	 * @param c the command you are passing to the Incident
 	 */
 	public void executeCommand(int id, Command c) {
 
