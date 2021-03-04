@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 
-public class ServiceGroupsWriter {
+public class ServiceGroupWriter {
 
-	public ServiceGroupsWriter() {
+	public ServiceGroupWriter() {
 		
 	}
 	
