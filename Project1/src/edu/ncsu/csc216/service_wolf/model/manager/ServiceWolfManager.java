@@ -152,4 +152,11 @@ public class ServiceWolfManager {
 		
 	}
 	
+	/**
+	 * 
+	 */
+	protected void resetManager() {
+		
+	}
+	
 }
