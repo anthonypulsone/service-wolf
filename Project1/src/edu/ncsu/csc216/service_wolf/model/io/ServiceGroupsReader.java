@@ -9,12 +9,12 @@ import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
  * @author anthonypulsone
  *
  */
-public class ServiceGroupReader {
+public class ServiceGroupsReader {
 
 	/**
 	 * 
 	 */
-	public ServiceGroupReader() {
+	public ServiceGroupsReader() {
 		
 	}
 	
@@ -22,7 +22,7 @@ public class ServiceGroupReader {
 	 * @param FileName
 	 * @return
 	 */
-	public static ArrayList<ServiceGroup>readServiceGroupFile(String FileName){
+	public static ArrayList<ServiceGroup>readServiceGroupsFile(String FileName){
 		return null;
 	}
 	

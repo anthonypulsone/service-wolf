@@ -8,26 +8,26 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * Test class for ServiceGroupReader
+ * Test class for ServiceGroupsReader
  * 
  * @author anthonypulsone
  *
  */
-public class ServiceGroupReaderTest {
+public class ServiceGroupsReaderTest {
 
 	/**
-	 * Test method for ServiceGroupReader()
+	 * Test method for ServiceGroupsReader()
 	 */
 	@Test
-	public void testServiceGroupReader() {
+	public void testServiceGroupsReader() {
 		fail("Not yet implemented");
 	}
 
 	/**
-	 * Test method for readServiceGroupFile
+	 * Test method for readServiceGroupsFile
 	 */
 	@Test
-	public void testReadServiceGroupFile() {
+	public void testReadServiceGroupsFile() {
 		fail("Not yet implemented");
 	}
 

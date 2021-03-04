@@ -13,7 +13,7 @@ import org.junit.Test;
  * @author anthonypulsone
  *
  */
-public class ServiceGroupWriterTest {
+public class ServiceGroupsWriterTest {
 
 	/**
 	 * Test method for ServiceGroupWriter()
