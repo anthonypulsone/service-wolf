@@ -173,7 +173,8 @@ public class Incident {
 	 * Setter for currentState field. To be used in the constructor for file i/o.
 	 * Finds the proper State for the String containing the name of the State
 	 * 
-	 * @param state
+	 * @param state the String representing the state you are attempting to set this
+	 *              to
 	 */
 	public void setState(String state) {
 
@@ -264,7 +265,7 @@ public class Incident {
 	 * Adds a String message to the ArrayList of Strings containing the log of
 	 * messages for this Incident
 	 * 
-	 * @param incidentLog the incidentLog to set
+	 * @param message the incidentLog to set
 	 */
 	private int addMessageToIncidentLog(String message) {
 		return 0;
@@ -498,8 +499,8 @@ public class Incident {
 	private class CanceledState implements IncidentState {
 
 		/**
-		 * Allows the state to be changed to the state specified by the command if
-		 * valid If invalid an exception is thrown to the method that called updateState
+		 * Allows the state to be changed to the state specified by the command if valid
+		 * If invalid an exception is thrown to the method that called updateState
 		 * 
 		 * @param command the command that is attempting to be executed
 		 * @throws UnsupportedOperationException if the Command is not a valid operation
