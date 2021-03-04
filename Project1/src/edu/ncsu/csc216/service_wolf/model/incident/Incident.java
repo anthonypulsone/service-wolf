@@ -79,7 +79,7 @@ public class Incident {
 	/** A constant string for the cancellation reason of “Not an Incident” */
 	public static final String CANCELLATION_NOT_AN_INCIDENT = "Not an Incident";
 	/** A constant string for the cancellation reason of “Caller Canceled” */
-	public static final String CANCELLATION_CALLER_CANCELED = "Caller Canceled";
+	public static final String CANCELLATION_CALLER_CANCELLED = "Caller Canceled";
 	/** A constant string that represents an unowned incident */
 	public static final String UNOWNED = "Unowned";
 	/** A constant string that represents an incident with no status reasons */
