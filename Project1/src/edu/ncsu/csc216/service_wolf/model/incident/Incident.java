@@ -19,19 +19,23 @@ import edu.ncsu.csc216.service_wolf.model.command.Command;
  * @author anthonypulsone
  *
  */
+/**
+ * @author anthonypulsone
+ *
+ */
 public class Incident {
 	/** Current state for the incident */
 	private IncidentState currentState;
 	/** Final instance of the NewState inner class */
-	private final IncidentState newState = new NewState;
+	private final IncidentState newState = new NewState();
 	/** Final instance of the InProgressState inner class */
-	private final IncidentState inProgressState = new InProgressState;
+	private final IncidentState inProgressState = new InProgressState();
 	/** Final instance of the OnHoldState inner class */
-	private final IncidentState onHoldState = new OnHoldState;
+	private final IncidentState onHoldState = new OnHoldState();
 	/** Final instance of the ResolvedState inner class */
-	private final IncidentState resolvedState = new ResolvedState;
+	private final IncidentState resolvedState = new ResolvedState();
 	/** Final instance of the CanceledState inner class */
-	private final IncidentState canceledState = new CanceledState;
+	private final IncidentState canceledState = new CanceledState();
 	/** int representing the id of the incident */
 	private int incidentId;
 	/** String containing the title of the incident */
@@ -303,6 +307,220 @@ public class Incident {
 	 *                                       Command, is not appropriate for the FSM
 	 */
 	public void update(Command c) {
+
+	}
+
+	/**
+	 * Interface for states in the Incident State Pattern. All concrete incident
+	 * states must implement the IncidentState interface. The IncidentState
+	 * interface should be a private interface of the Incident class.
+	 * 
+	 * @author Dr. Sarah Heckman (sarah_heckman@ncsu.edu)
+	 */
+	private interface IncidentState {
+
+		/**
+		 * Update the Incident based on the given Command. An
+		 * UnsupportedOperationException is thrown if the Command is not a valid action
+		 * for the given state.
+		 * 
+		 * @param command Command describing the action that will update the Incident's
+		 *                state.
+		 * @throws UnsupportedOperationException if the Command is not a valid action
+		 *                                       for the given state.
+		 */
+		void updateState(Command command);
+
+		/**
+		 * Returns the name of the current state as a String.
+		 * 
+		 * @return the name of the current state as a String.
+		 */
+		String getStateName();
+
+	}
+
+	/**
+	 * Represents the new state, the first state of the ServiceWolf FSM. Overrides
+	 * the updateState and getStateName methods from the IncidentState interface in
+	 * order to enforce the state transition rules for each specific State.
+	 * 
+	 * @author anthonypulsone
+	 *
+	 */
+	private class NewState implements IncidentState {
+
+		/**
+		 * Allows the state to be changed to the state specified by the command if valid
+		 * If invalid an exception is thrown to the method that called updateState
+		 * 
+		 * @param command the command that is attempting to be executed
+		 * @throws UnsupportedOperationException if the Command is not a valid operation
+		 *                                       for the given state.
+		 */
+		@Override
+		public void updateState(Command command) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * Getter for the name of the State
+		 * 
+		 * @return a String containing the State's name
+		 */
+		@Override
+		public String getStateName() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+	}
+
+	/**
+	 * Represents the in progress state of the ServiceWolf FSM. Overrides the
+	 * updateState and getStateName methods from the IncidentState interface in
+	 * order to enforce the state transition rules for each specific State.
+	 * 
+	 * @author anthonypulsone
+	 *
+	 */
+	private class InProgressState implements IncidentState {
+
+		/**
+		 * Allows the state to be changed to the state specified by the command if valid
+		 * If invalid an exception is thrown to the method that called updateState
+		 * 
+		 * @param command the command that is attempting to be executed
+		 * @throws UnsupportedOperationException if the Command is not a valid operation
+		 *                                       for the given state.
+		 */
+		@Override
+		public void updateState(Command command) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * Getter for the name of the State
+		 * 
+		 * @return a String containing the State's name
+		 */
+		@Override
+		public String getStateName() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	}
+
+	/**
+	 * Represents the on hold state of the ServiceWolf FSM. Overrides the
+	 * updateState and getStateName methods from the IncidentState interface in
+	 * order to enforce the state transition rules for each specific State.
+	 * 
+	 * @author anthonypulsone
+	 *
+	 */
+	private class OnHoldState implements IncidentState {
+
+		/**
+		 * Allows the state to be changed to the state specified by the command if valid
+		 * If invalid an exception is thrown to the method that called updateState
+		 * 
+		 * @param command the command that is attempting to be executed
+		 * @throws UnsupportedOperationException if the Command is not a valid operation
+		 *                                       for the given state.
+		 */
+		@Override
+		public void updateState(Command command) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * Getter for the name of the State
+		 * 
+		 * @return a String containing the State's name
+		 */
+		@Override
+		public String getStateName() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	}
+
+	/**
+	 * Represents the resolved state of the ServiceWolf FSM. Overrides the
+	 * updateState and getStateName methods from the IncidentState interface in
+	 * order to enforce the state transition rules for each specific State.
+	 * 
+	 * @author anthonypulsone
+	 *
+	 */
+	private class ResolvedState implements IncidentState {
+
+		/**
+		 * Allows the state to be changed to the state specified by the command if valid
+		 * If invalid an exception is thrown to the method that called updateState
+		 * 
+		 * @param command the command that is attempting to be executed
+		 * @throws UnsupportedOperationException if the Command is not a valid operation
+		 *                                       for the given state.
+		 */
+		@Override
+		public void updateState(Command command) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * Getter for the name of the State
+		 * 
+		 * @return a String containing the State's name
+		 */
+		@Override
+		public String getStateName() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+	}
+
+	/**
+	 * Represents the canceled state of the ServiceWolf FSM. Overrides the
+	 * updateState and getStateName methods from the IncidentState interface in
+	 * order to enforce the state transition rules for each specific State.
+	 * 
+	 * @author anthonypulsone
+	 *
+	 */
+	private class CanceledState implements IncidentState {
+
+		/**
+		 * Allows the state to be changed to the state specified by the command if
+		 * valid If invalid an exception is thrown to the method that called updateState
+		 * 
+		 * @param command the command that is attempting to be executed
+		 * @throws UnsupportedOperationException if the Command is not a valid operation
+		 *                                       for the given state.
+		 */
+		@Override
+		public void updateState(Command command) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * Getter for the name of the State
+		 * 
+		 * @return a String containing the State's name
+		 */
+		@Override
+		public String getStateName() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
 	}
 }
