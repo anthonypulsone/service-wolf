@@ -166,7 +166,7 @@ public class Incident {
 	 * @return a String containing the State of the Incident
 	 */
 	public String getState() {
-
+		return null;
 	}
 
 	/**
