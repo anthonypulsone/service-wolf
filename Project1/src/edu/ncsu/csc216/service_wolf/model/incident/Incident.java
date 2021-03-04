@@ -69,7 +69,7 @@ public class Incident {
 	/** A constant string for the resolution reason of “Permanently Solved” */
 	public static final String RESOLUTION_PERMANENTLY_SOLVED = "Permanently Solved";
 	/** A constant string for the resolution reason of “Workaround” */
-	public static final String WORKAROUND = "Workaround";
+	public static final String RESOLUTION_WORKAROUND = "Workaround";
 	/** A constant string for the resolution reason of “Caller Closed” */
 	public static final String RESOLUTION_CALLER_CLOSED = "Caller Closed";
 	/** A constant string for the cancellation reason of “Duplicate” */
