@@ -28,7 +28,24 @@ public class Command {
 	 * @author provided by csc216 teaching staff
 	 */
 	public enum CommandValue {
-		ASSIGN, HOLD, INVESTIGATE, RESOLVE, REOPEN, CANCEL
+		
+		/** Value for assign command */
+		ASSIGN, 
+		
+		/** Value for hold command */
+		HOLD, 
+		
+		/** Value for investigate command */
+		INVESTIGATE, 
+		
+		/** Value for the resolve command */
+		RESOLVE, 
+		
+		/** Value for the reopen command */
+		REOPEN, 
+		
+		/** Value for the cancel command */
+		CANCEL
 	}
 
 	/**
