@@ -25,7 +25,7 @@ public class Command {
 	 * Enumeration for CommandValue. Contains the six commands that can be chosen by
 	 * the user in the ServiceWolf program.
 	 * 
-	 * @author provide by csc216 teaching staff
+	 * @author provided by csc216 teaching staff
 	 */
 	public enum CommandValue {
 		ASSIGN, HOLD, INVESTIGATE, RESOLVE, REOPEN, CANCEL

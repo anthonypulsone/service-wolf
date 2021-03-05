@@ -17,11 +17,6 @@ import edu.ncsu.csc216.service_wolf.model.command.Command;
  * each state in the finite state machine.
  * 
  * @author anthonypulsone
- *
- */
-/**
- * @author anthonypulsone
- *
  */
 public class Incident {
 	/** Current state for the incident */
@@ -49,7 +44,7 @@ public class Incident {
 	/** String containing the details of the incident status */
 	private String statusDetails;
 	/** List containing the log of each message in the IncidentLog */
-	private ArrayList<String> IncidentLog;
+	private ArrayList<String> incidentLog;
 	/** A constant string for the new state’s name */
 	public static final String NEW_NAME = "New";
 	/** A constant string for the in progress state */
@@ -266,6 +261,7 @@ public class Incident {
 	 * messages for this Incident
 	 * 
 	 * @param message the incidentLog to set
+	 * @return an int value
 	 */
 	private int addMessageToIncidentLog(String message) {
 		return 0;
