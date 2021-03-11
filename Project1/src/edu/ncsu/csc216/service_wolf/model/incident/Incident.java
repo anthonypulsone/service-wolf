@@ -6,6 +6,7 @@ package edu.ncsu.csc216.service_wolf.model.incident;
 import java.util.ArrayList;
 
 import edu.ncsu.csc216.service_wolf.model.command.Command;
+import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
 
 /**
  * Incident represents an Incident object managed by the system. An Incident has
@@ -83,7 +84,8 @@ public class Incident {
 	private static int counter = 0;
 
 	/**
-	 * Constructs a Incident from the provided title, caller, and message.
+	 * Constructs a Incident from the provided title, caller, and message. Used for
+	 * new incident.
 	 * 
 	 * @param title   String containing the title of the incident
 	 * @param caller  String containing the name or id of the caller
@@ -94,6 +96,14 @@ public class Incident {
 	 *                                  thrown.
 	 */
 	public Incident(String title, String caller, String message) {
+		setTitle(title);
+		setCaller(caller);
+		setState(NEW_NAME);
+		setOwner(UNOWNED);
+		setStatusDetails(NO_STATUS);
+		addMessageToIncidentLog(message);
+		Incident.incrementCounter();
+		this.incidentId = Incident.counter;
 
 	}
 
@@ -116,7 +126,17 @@ public class Incident {
 	 */
 	public Incident(int id, String state, String title, String caller, int reopenCount,
 			String owner, String statusDetails, ArrayList<String> incidentLog) {
-
+		setTitle(title);
+		setCaller(caller);
+		setReopenCount(reopenCount);
+		setOwner(owner);
+		if (incidentLog == null) {
+			throw new IllegalArgumentException();
+		}
+		this.incidentLog = incidentLog;
+		setStatusDetails(statusDetails);
+		setId(incidentId);
+		setState(state);
 	}
 
 	/**
@@ -132,8 +152,15 @@ public class Incident {
 	 * Setter for the id of this
 	 * 
 	 * @param incidentId the incidentId to set
+	 * @throws IllegalArgumentException if Id less than 1
 	 */
 	private void setId(int incidentId) {
+		if (incidentId <= 0) {
+			throw new IllegalArgumentException();
+		}
+		if (incidentId > Incident.counter) {
+			Incident.setCounter(incidentId + 1);
+		}
 		this.incidentId = incidentId;
 	}
 
@@ -150,8 +177,12 @@ public class Incident {
 	 * Setter for this Incident title
 	 * 
 	 * @param title the title to set
+	 * @throws IllegalArgumentException if parameter is null or empty
 	 */
 	private void setTitle(String title) {
+		if (title == null || "".equals(title)) {
+			throw new IllegalArgumentException();
+		}
 		this.title = title;
 	}
 
@@ -170,9 +201,30 @@ public class Incident {
 	 * 
 	 * @param state the String representing the state you are attempting to set this
 	 *              to
+	 * @throws IllegalArgumentException if parameter is null or empty or not a state
 	 */
 	public void setState(String state) {
-
+		if (state.equals(NEW_NAME) && this.statusDetails.equals(NO_STATUS)) {
+			this.currentState = newState;
+		} else if (state.equals(IN_PROGRESS_NAME) && this.statusDetails.equals(NO_STATUS)) {
+			this.currentState = inProgressState;
+		} else if (state.equals(ON_HOLD_NAME) && (this.statusDetails.equals(HOLD_AWAITING_CALLER)
+				|| this.statusDetails.equals(HOLD_AWAITING_CHANGE)
+				|| this.statusDetails.equals(HOLD_AWAITING_VENDOR))) {
+			this.currentState = onHoldState;
+		} else if (state.equals(RESOLVED_NAME)
+				&& (this.statusDetails.equals(RESOLUTION_PERMANENTLY_SOLVED)
+						|| this.statusDetails.equals(RESOLUTION_WORKAROUND)
+						|| this.statusDetails.equals(RESOLUTION_CALLER_CLOSED))) {
+			this.currentState = resolvedState;
+		} else if (state.equals(CANCELED_NAME) && (this.statusDetails.equals(CANCELLATION_DUPLICATE)
+				|| this.statusDetails.equals(CANCELLATION_UNNECESSARY)
+				|| this.statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT)
+				|| this.statusDetails.equals(CANCELLATION_CALLER_CANCELLED))) {
+			this.currentState = canceledState;
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	/**
@@ -188,8 +240,12 @@ public class Incident {
 	 * Setter for the caller of this Incident
 	 * 
 	 * @param caller the caller to set
+	 * @throws IllegalArgumentException if parameter is null or empty
 	 */
 	private void setCaller(String caller) {
+		if (caller == null || "".equals(caller)) {
+			throw new IllegalArgumentException();
+		}
 		this.caller = caller;
 	}
 
@@ -206,8 +262,12 @@ public class Incident {
 	 * Setter for the reopenCount of this Incident
 	 * 
 	 * @param reopenCount the reopenCount to set
+	 * @throws IllegalArgumentException if reopenCount < 0
 	 */
 	private void setReopenCount(int reopenCount) {
+		if (reopenCount < 0) {
+			throw new IllegalArgumentException();
+		}
 		this.reopenCount = reopenCount;
 	}
 
@@ -224,8 +284,12 @@ public class Incident {
 	 * Setter for the owner of this Incident
 	 * 
 	 * @param owner the owner to set
+	 * @throws IllegalArgumentException if owner null or empty
 	 */
 	private void setOwner(String owner) {
+		if (owner == null || "".equals(owner)) {
+			throw new IllegalArgumentException();
+		}
 		this.owner = owner;
 	}
 
@@ -253,7 +317,11 @@ public class Incident {
 	 * @return the incidentLog messages as a String
 	 */
 	public String getIncidentLogMessages() {
-		return null;
+		String log = null;
+		for(int i = 0; i < incidentLog.size(); i++) {
+			log = "- " + incidentLog.get(i) + "\n";
+		}
+		return log;
 	}
 
 	/**
@@ -262,9 +330,14 @@ public class Incident {
 	 * 
 	 * @param message the incidentLog to set
 	 * @return an int value
+	 * @throws IllegalArgumentException if parameter null or empty
 	 */
 	private int addMessageToIncidentLog(String message) {
-		return 0;
+		if (message == null || "".equals(message)) {
+			throw new IllegalArgumentException();
+		}
+		incidentLog.add(message);
+		return incidentLog.size();
 	}
 
 	/**
@@ -281,7 +354,7 @@ public class Incident {
 	 * @param value the int value being assigned to the counter
 	 */
 	public static void setCounter(int value) {
-
+		Incident.counter = value;
 	}
 
 	/**
@@ -304,7 +377,7 @@ public class Incident {
 	 *                                       Command, is not appropriate for the FSM
 	 */
 	public void update(Command c) {
-
+		currentState.updateState(c);
 	}
 
 	/**
@@ -357,8 +430,21 @@ public class Incident {
 		 */
 		@Override
 		public void updateState(Command command) {
-			// TODO Auto-generated method stub
-
+			try {
+				if (command.getCommand() == CommandValue.ASSIGN) {
+					setOwner(command.getCommandInformation());
+					addMessageToIncidentLog(command.getCommandMessage());
+					currentState = inProgressState;
+				} else if (command.getCommand() == CommandValue.CANCEL) {
+					setStatusDetails(command.getCommandInformation());
+					addMessageToIncidentLog(command.getCommandMessage());
+					currentState = canceledState;
+				} else {
+					throw new IllegalArgumentException();
+				}
+			} catch (IllegalArgumentException e) {
+				throw new UnsupportedOperationException();
+			}
 		}
 
 		/**
@@ -368,8 +454,7 @@ public class Incident {
 		 */
 		@Override
 		public String getStateName() {
-			// TODO Auto-generated method stub
-			return null;
+			return NEW_NAME;
 		}
 	}
 
@@ -393,8 +478,31 @@ public class Incident {
 		 */
 		@Override
 		public void updateState(Command command) {
-			// TODO Auto-generated method stub
+			try {
+				if (command.getCommand() == CommandValue.HOLD) {
+					setStatusDetails(command.getCommandInformation());
+					addMessageToIncidentLog(command.getCommandMessage());
+					currentState = onHoldState;
+				} else if (command.getCommand() == CommandValue.RESOLVE) {
+					setStatusDetails(command.getCommandInformation());
+					addMessageToIncidentLog(command.getCommandMessage());
+					currentState = resolvedState;
+				} else if (command.getCommand() == CommandValue.ASSIGN) {
+					setOwner(command.getCommandInformation());
+					addMessageToIncidentLog(command.getCommandMessage());
 
+					currentState = inProgressState;
+				} else if (command.getCommand() == CommandValue.CANCEL) {
+					setStatusDetails(command.getCommandInformation());
+					addMessageToIncidentLog(command.getCommandMessage());
+					setOwner(UNOWNED);
+					currentState = canceledState;
+				} else {
+					throw new IllegalArgumentException();
+				}
+			} catch (IllegalArgumentException e) {
+				throw new UnsupportedOperationException();
+			}
 		}
 
 		/**
@@ -404,8 +512,7 @@ public class Incident {
 		 */
 		@Override
 		public String getStateName() {
-			// TODO Auto-generated method stub
-			return null;
+			return IN_PROGRESS_NAME;
 		}
 
 	}
@@ -430,8 +537,17 @@ public class Incident {
 		 */
 		@Override
 		public void updateState(Command command) {
-			// TODO Auto-generated method stub
-
+			try {
+				if (command.getCommand() == CommandValue.INVESTIGATE) {
+					addMessageToIncidentLog(command.getCommandMessage());
+					setStatusDetails(NO_STATUS);
+					currentState = inProgressState;
+				} else {
+					throw new IllegalArgumentException();
+				}
+			} catch (IllegalArgumentException e) {
+				throw new UnsupportedOperationException();
+			}
 		}
 
 		/**
@@ -442,7 +558,7 @@ public class Incident {
 		@Override
 		public String getStateName() {
 			// TODO Auto-generated method stub
-			return null;
+			return ON_HOLD_NAME;
 		}
 
 	}
@@ -467,7 +583,22 @@ public class Incident {
 		 */
 		@Override
 		public void updateState(Command command) {
-			// TODO Auto-generated method stub
+			try {
+				if (command.getCommand() == CommandValue.REOPEN) {
+					setStatusDetails(NO_STATUS);
+					addMessageToIncidentLog(command.getCommandMessage());
+					currentState = inProgressState;
+				} else if (command.getCommand() == CommandValue.CANCEL) {
+					setOwner(UNOWNED);
+					setStatusDetails(command.getCommandInformation());
+					addMessageToIncidentLog(command.getCommandMessage());
+					currentState = canceledState;
+				} else {
+					throw new IllegalArgumentException();
+				}
+			} catch (IllegalArgumentException e) {
+				throw new UnsupportedOperationException();
+			}
 
 		}
 
@@ -478,8 +609,7 @@ public class Incident {
 		 */
 		@Override
 		public String getStateName() {
-			// TODO Auto-generated method stub
-			return null;
+			return RESOLVED_NAME;
 		}
 
 	}
@@ -495,8 +625,8 @@ public class Incident {
 	private class CanceledState implements IncidentState {
 
 		/**
-		 * Allows the state to be changed to the state specified by the command if valid
-		 * If invalid an exception is thrown to the method that called updateState
+		 * Throws an UnsupportedOperationException since you can not change a canceled
+		 * Incident
 		 * 
 		 * @param command the command that is attempting to be executed
 		 * @throws UnsupportedOperationException if the Command is not a valid operation
@@ -504,8 +634,7 @@ public class Incident {
 		 */
 		@Override
 		public void updateState(Command command) {
-			// TODO Auto-generated method stub
-
+			throw new UnsupportedOperationException();
 		}
 
 		/**
@@ -515,8 +644,7 @@ public class Incident {
 		 */
 		@Override
 		public String getStateName() {
-			// TODO Auto-generated method stub
-			return null;
+			return CANCELED_NAME;
 		}
 
 	}
