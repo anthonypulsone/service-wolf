@@ -45,7 +45,7 @@ public class Incident {
 	/** String containing the details of the incident status */
 	private String statusDetails;
 	/** List containing the log of each message in the IncidentLog */
-	private ArrayList<String> incidentLog;
+	private ArrayList<String> incidentLog = new ArrayList<String>();
 	/** A constant string for the new state’s name */
 	public static final String NEW_NAME = "New";
 	/** A constant string for the in progress state */
@@ -81,7 +81,7 @@ public class Incident {
 	/** A constant string that represents an incident with no status reasons */
 	public static final String NO_STATUS = "No Status";
 	/** Static int that used to track which id ints have already been assigned */
-	private static int counter = 0;
+	private static int counter = 1;
 
 	/**
 	 * Constructs a Incident from the provided title, caller, and message. Used for
@@ -98,12 +98,13 @@ public class Incident {
 	public Incident(String title, String caller, String message) {
 		setTitle(title);
 		setCaller(caller);
-		setState(NEW_NAME);
 		setOwner(UNOWNED);
 		setStatusDetails(NO_STATUS);
 		addMessageToIncidentLog(message);
-		Incident.incrementCounter();
+		setState(NEW_NAME);
+
 		this.incidentId = Incident.counter;
+		Incident.incrementCounter();
 
 	}
 
@@ -135,8 +136,9 @@ public class Incident {
 		}
 		this.incidentLog = incidentLog;
 		setStatusDetails(statusDetails);
-		setId(incidentId);
+		setId(id);
 		setState(state);
+
 	}
 
 	/**
@@ -162,6 +164,7 @@ public class Incident {
 			Incident.setCounter(incidentId + 1);
 		}
 		this.incidentId = incidentId;
+		Incident.incrementCounter();
 	}
 
 	/**
@@ -192,7 +195,7 @@ public class Incident {
 	 * @return a String containing the State of the Incident
 	 */
 	public String getState() {
-		return null;
+		return currentState.getStateName();
 	}
 
 	/**
@@ -204,6 +207,9 @@ public class Incident {
 	 * @throws IllegalArgumentException if parameter is null or empty or not a state
 	 */
 	public void setState(String state) {
+		if (state == null) {
+			throw new IllegalArgumentException();
+		}
 		if (state.equals(NEW_NAME) && this.statusDetails.equals(NO_STATUS)) {
 			this.currentState = newState;
 		} else if (state.equals(IN_PROGRESS_NAME) && this.statusDetails.equals(NO_STATUS)) {
@@ -306,8 +312,12 @@ public class Incident {
 	 * Setter for the statusDetails of this Incident
 	 * 
 	 * @param statusDetails the statusDetails to set
+	 * @throws IllegalArgumentException if param null or empty
 	 */
 	private void setStatusDetails(String statusDetails) {
+		if (statusDetails == null || "".equals(statusDetails)) {
+			throw new IllegalArgumentException();
+		}
 		this.statusDetails = statusDetails;
 	}
 
@@ -317,9 +327,9 @@ public class Incident {
 	 * @return the incidentLog messages as a String
 	 */
 	public String getIncidentLogMessages() {
-		String log = null;
-		for(int i = 0; i < incidentLog.size(); i++) {
-			log = "- " + incidentLog.get(i) + "\n";
+		String log = "";
+		for (int i = 0; i < incidentLog.size(); i++) {
+			log = log + "- " + incidentLog.get(i) + "\n";
 		}
 		return log;
 	}
@@ -336,7 +346,8 @@ public class Incident {
 		if (message == null || "".equals(message)) {
 			throw new IllegalArgumentException();
 		}
-		incidentLog.add(message);
+		this.incidentLog.add(message);
+
 		return incidentLog.size();
 	}
 
@@ -363,7 +374,10 @@ public class Incident {
 	 */
 	@Override
 	public String toString() {
-		return null;
+		String s = "* " + this.getId() + "," + this.getState() + "," + this.getTitle() + ","
+				+ this.getCaller() + "," + this.getReopenCount() + "," + this.getOwner() + ","
+				+ this.getStatusDetails() + "\n";
+		return s + this.getIncidentLogMessages();
 	}
 
 	/**

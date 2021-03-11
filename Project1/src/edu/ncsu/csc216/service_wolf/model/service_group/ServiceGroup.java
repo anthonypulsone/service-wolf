@@ -28,7 +28,8 @@ public class ServiceGroup {
 	 * @throws IllegalArgumentException if null or empty String is passed
 	 */
 	public ServiceGroup(String name) {
-
+		incidents = new ArrayList<Incident>();
+		setServiceGroupName(name);
 	}
 
 	/**
@@ -36,7 +37,14 @@ public class ServiceGroup {
 	 * id in the list of Incidents for the service group + 1.
 	 */
 	public void setIncidentCounter() {
-
+		int maxId = 0;
+		for (int i = 0; i < incidents.size(); i++) {
+			int idToCompare = incidents.get(i).getId();
+			if (idToCompare > maxId) {
+				maxId = idToCompare;
+			}
+		}
+		Incident.setCounter(maxId + 1);
 	}
 
 	/**
@@ -45,7 +53,10 @@ public class ServiceGroup {
 	 * @param name String you are setting the name to
 	 */
 	public void setServiceGroupName(String name) {
-
+		if (name == null || "".equals(name)) {
+			throw new IllegalArgumentException("Invalid service group name.");
+		}
+		this.serviceGroupName = name.trim();
 	}
 
 	/**
@@ -69,7 +80,23 @@ public class ServiceGroup {
 	 * @throws IllegalArgumentException if an incident already exists with that id
 	 */
 	public void addIncident(Incident incident) {
-
+		int id = incident.getId();
+		if (incidents.size() == 0) {
+			incidents.add(incident);
+		} else {
+			for (int i = 0; i < incidents.size(); i++) {
+				int idToCompare = incidents.get(i).getId();
+				if (id == idToCompare) {
+					throw new IllegalArgumentException("Incident cannot be created.");
+				} else if (id < idToCompare) {
+					incidents.add(i, incident);
+					break;
+				} else if (i == incidents.size() - 1 && id > idToCompare) {
+					incidents.add(incident);
+					break;
+				}
+			}
+		}
 	}
 
 	/**
@@ -78,7 +105,7 @@ public class ServiceGroup {
 	 * @return ArrayList containing the Incident objects
 	 */
 	public ArrayList<Incident> getIncidents() {
-		return null;
+		return incidents;
 	}
 
 	/**
@@ -90,7 +117,14 @@ public class ServiceGroup {
 	 * @return the Incident if found or null if not
 	 */
 	public Incident getIncidentById(int id) {
-		return null;
+		Incident incident = null;
+		for (int i = 0; i < incidents.size(); i++) {
+			int idToCompare = incidents.get(i).getId();
+			if (id == idToCompare) {
+				incident = incidents.get(i);
+			}
+		}
+		return incident;
 	}
 
 	/**
@@ -99,17 +133,30 @@ public class ServiceGroup {
 	 * @param id the id of the incident you are deleting
 	 */
 	public void deleteIncidentById(int id) {
-
+		for (int i = 0; i < incidents.size(); i++) {
+			int idToCompare = incidents.get(i).getId();
+			if (id == idToCompare) {
+				incidents.remove(i);
+			}
+		}
 	}
 
 	/**
-	 * Finds the Incident with the given id and update it by passing in the given Command.
+	 * Finds the Incident with the given id and update it by passing in the given
+	 * Command.
 	 * 
 	 * @param id the id of the Incident you are passing a the command to
-	 * @param c the command you are passing to the Incident
+	 * @param c  the command you are passing to the Incident
 	 */
 	public void executeCommand(int id, Command c) {
-
+		Incident incident = null;
+		for (int i = 0; i < incidents.size(); i++) {
+			int idToCompare = incidents.get(i).getId();
+			if (id == idToCompare) {
+				incident = incidents.get(i);
+				incident.update(c);
+			}
+		}
 	}
 
 }
