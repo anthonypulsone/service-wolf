@@ -5,7 +5,11 @@ package edu.ncsu.csc216.service_wolf.model.io;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
+
+import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 
 /**
  * Test class for ServiceGroupsReader
@@ -14,21 +18,20 @@ import org.junit.Test;
  *
  */
 public class ServiceGroupsReaderTest {
-
-	/**
-	 * Test method for ServiceGroupsReader()
-	 */
-	@Test
-	public void testServiceGroupsReader() {
-		fail("Not yet implemented");
-	}
-
+	/** test file 1 */
+	private final String validTestFile = "test-files/incidents1.txt";
+	
 	/**
 	 * Test method for readServiceGroupsFile
 	 */
 	@Test
 	public void testReadServiceGroupsFile() {
-		fail("Not yet implemented");
+		ArrayList<ServiceGroup> list = ServiceGroupsReader.readServiceGroupsFile(validTestFile);
+		assertEquals(3, list.size());
+		assertEquals(4, list.get(0).getIncidents().size());
+		assertEquals(1, list.get(1).getIncidents().size());
+		assertEquals(1, list.get(2).getIncidents().size());
+		
 	}
-
+	
 }

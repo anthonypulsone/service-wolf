@@ -75,7 +75,6 @@ public class ServiceGroupTest {
 		s.setIncidentCounter();
 		Incident i4 = new Incident("Taco sauce in keys", "Jimbo", "Hot sauce squirted on keys");
 		s.addIncident(i4);
-		System.out.println(i4.getId());
 		assertEquals(8, i4.getId());
 	}
 

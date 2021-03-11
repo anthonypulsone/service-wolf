@@ -16,7 +16,9 @@ import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
  *
  */
 public class ServiceWolfManager {
-
+	
+	/** singleton instance of ServiceWolfManager */
+	private static ServiceWolfManager singleton;
 	/** ArrayList that contains a list of ServiceGroups in this */
 	private ArrayList<ServiceGroup> serviceGroups;
 
@@ -28,7 +30,7 @@ public class ServiceWolfManager {
 	 * Singleton instance of this class
 	 */
 	private ServiceWolfManager() {
-
+		this.serviceGroups = new ArrayList<ServiceGroup>();
 	}
 
 	/**
@@ -37,7 +39,10 @@ public class ServiceWolfManager {
 	 * @return ServiceWolfManager object
 	 */
 	public static ServiceWolfManager getInstance() {
-		return null;
+		if (singleton == null) {
+			singleton = new ServiceWolfManager();
+		}
+		return singleton;
 	}
 
 	/**
@@ -48,7 +53,7 @@ public class ServiceWolfManager {
 	 * @throws IllegalArgumentException if passed from the output method if thrown
 	 */
 	public void saveToFile(String fileName) {
-
+		
 	}
 
 	/**

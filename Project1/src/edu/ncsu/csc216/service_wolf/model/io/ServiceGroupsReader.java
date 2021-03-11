@@ -1,6 +1,10 @@
 package edu.ncsu.csc216.service_wolf.model.io;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
 import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
@@ -27,7 +31,25 @@ public class ServiceGroupsReader {
 	 * @throws IllegalArgumentException if file is unable to be loaded
 	 */
 	public static ArrayList<ServiceGroup> readServiceGroupsFile(String fileName) {
-		return null;
+		Scanner fileReader;
+		ArrayList<ServiceGroup> groupList = new ArrayList<ServiceGroup>();
+		try {
+			fileReader = new Scanner(new FileInputStream(fileName));
+		} catch (FileNotFoundException e) {
+			throw new IllegalArgumentException("Unable to load file.");
+		}
+		fileReader.useDelimiter("\\r?\\n?[#]");
+		while (fileReader.hasNext()) {
+			try {
+				groupList.add(processServiceGroup(fileReader.next()));
+			} catch (IllegalArgumentException e) {
+				continue;
+			}
+
+		}
+
+		fileReader.close();
+		return groupList;
 	}
 
 	/**
@@ -37,7 +59,20 @@ public class ServiceGroupsReader {
 	 * @return a ServiceGroup object for the passed String
 	 */
 	private static ServiceGroup processServiceGroup(String serviceGroupString) {
-		return null;
+		Scanner groupScanner = new Scanner(serviceGroupString);
+
+		ServiceGroup group = new ServiceGroup(groupScanner.nextLine().trim());
+		groupScanner.useDelimiter("\\r?\\n?[*]");
+		while (groupScanner.hasNext()) {
+			try {
+				group.addIncident(processIncident(groupScanner.next()));
+			} catch (IllegalArgumentException e) {
+				continue;
+			}
+		}
+
+		groupScanner.close();
+		return group;
 	}
 
 	/**
@@ -47,7 +82,37 @@ public class ServiceGroupsReader {
 	 * @return a constructed Incident object for the String
 	 */
 	private static Incident processIncident(String incidentString) {
-		return null;
+
+		Scanner incidentScanner = new Scanner(incidentString);
+		Scanner incidentInfo = new Scanner(incidentScanner.nextLine().trim());
+
+		incidentInfo.useDelimiter(",");
+		try {
+			// get the Incident parameters from comma separated list
+			int id = incidentInfo.nextInt();
+			String state = incidentInfo.next().trim();
+			String title = incidentInfo.next().trim();
+			String caller = incidentInfo.next().trim();
+			int reopenCount = incidentInfo.nextInt();
+			String owner = incidentInfo.next().trim();
+			String statusDetails = incidentInfo.next().trim();
+			// get message log from rest of incidentScanner
+			incidentScanner.useDelimiter("\\r?\\n?[-]");
+			ArrayList<String> messageLog = new ArrayList<String>();
+			while (incidentScanner.hasNext()) {
+				messageLog.add(incidentScanner.next());
+			}
+			// attempt to construct incident IAE is thrown to caller of processIncident if
+			// invalid and is skipped
+			Incident incident = new Incident(id, state, title, caller, reopenCount, owner,
+					statusDetails, messageLog);
+			incidentScanner.close();
+			incidentInfo.close();
+			return incident;
+			// catch any mismatch exception and throw IAE to caller
+		} catch (InputMismatchException e) {
+			throw new IllegalArgumentException();
+		}
 
 	}
 }

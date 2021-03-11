@@ -1,7 +1,11 @@
 package edu.ncsu.csc216.service_wolf.model.io;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
+import edu.ncsu.csc216.service_wolf.model.incident.Incident;
 import edu.ncsu.csc216.service_wolf.model.service_group.ServiceGroup;
 
 /**
@@ -25,6 +29,19 @@ public class ServiceGroupWriter {
 	 * @throws IllegalArgumentException if unable to save to the file
 	 */
 	public static void writeServiceGroupsToFile(String fileName, ArrayList<ServiceGroup> list) {
-
+		try {
+			PrintStream fileWriter = new PrintStream(new File(fileName));
+	
+				for (int i = 0; i < list.size(); i++) {
+					ServiceGroup current = list.get(i);
+					ArrayList<Incident> currentList = current.getIncidents();
+					fileWriter.println("# " + current.getServiceGroupName());
+					for (int j = 0; j < currentList.size(); )
+					fileWriter.print(currentList.get(j).toString());
+				}
+			fileWriter.close();
+		} catch (IOException e) {
+			throw new IllegalArgumentException("Unable to save file.");
+		}
 	}
 }
