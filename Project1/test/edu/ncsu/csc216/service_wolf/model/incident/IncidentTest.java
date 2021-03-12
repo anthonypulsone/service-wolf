@@ -373,7 +373,7 @@ public class IncidentTest {
 				+ "- It wasn't working\n- That is a toaster, Billy. We don't support toasters\n",
 				i1.getIncidentLogMessages());
 		// in progress to resolved
-		Incident i2 = new Incident(4, "Resolved", "Broken Computer", "Jim", 0, "Tony", "No Status", log2);
+		Incident i2 = new Incident(4, "In Progress", "Broken Computer", "Jim", 0, "Tony", "No Status", log2);
 		Command c2 = new Command(CommandValue.RESOLVE, Incident.RESOLUTION_PERMANENTLY_SOLVED, "test message");
 		i2.update(c2);
 		assertEquals("Resolved", i2.getState());
