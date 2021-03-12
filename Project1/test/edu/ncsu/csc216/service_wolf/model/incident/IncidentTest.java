@@ -383,7 +383,16 @@ public class IncidentTest {
 		assertEquals("In Progress", i2.getState());
 		assertEquals("No Status", i2.getStatusDetails());
 		assertEquals(1, i2.getReopenCount());
-			
+		Command c2b = new Command(CommandValue.RESOLVE, Incident.CANCELLATION_CALLER_CANCELLED, "test message");
+		i2.update(c2b);
+		assertEquals("Resolved", i2.getState());
+		assertEquals("Caller Canceled", i2.getStatusDetails());
+		Command c2c = new Command(CommandValue.CANCEL, Incident.CANCELLATION_CALLER_CANCELLED, "test message");
+		i2.update(c2c);
+		assertEquals("Canceled", i2.getState());
+		assertEquals("Unowned", i2.getOwner());
+		assertEquals(Incident.CANCELLATION_CALLER_CANCELLED, i2.getStatusDetails());
+		
 		
 	}
 
