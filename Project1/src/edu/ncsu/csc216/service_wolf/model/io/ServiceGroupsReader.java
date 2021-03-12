@@ -100,7 +100,7 @@ public class ServiceGroupsReader {
 			incidentScanner.useDelimiter("\\r?\\n?[-]");
 			ArrayList<String> messageLog = new ArrayList<String>();
 			while (incidentScanner.hasNext()) {
-				messageLog.add(incidentScanner.next());
+				messageLog.add(incidentScanner.next().trim());
 			}
 			// attempt to construct incident IAE is thrown to caller of processIncident if
 			// invalid and is skipped
@@ -112,7 +112,7 @@ public class ServiceGroupsReader {
 			// catch any mismatch exception and throw IAE to caller
 		} catch (InputMismatchException e) {
 			throw new IllegalArgumentException();
-		}
+		} 
 
 	}
 }

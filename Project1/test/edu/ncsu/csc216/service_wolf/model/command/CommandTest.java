@@ -6,7 +6,6 @@ package edu.ncsu.csc216.service_wolf.model.command;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import edu.ncsu.csc216.service_wolf.model.command.Command;
 import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
 
 /**

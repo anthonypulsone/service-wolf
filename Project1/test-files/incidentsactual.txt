@@ -1,0 +1,12 @@
+# CSC IT
+* 1,Canceled,Piazza,sesmith5,0,Unowned,Not an Incident
+- Set up piazza for Spring 2021
+- Canceled; not an NC State IT service
+# ITECS
+* 2,On Hold,Java not installed correctly,zmgrosec,0,itecs1,Awaiting Caller
+- I can't install Java on my computer.
+- Assigned to itecs1
+- Awaiting caller's feedback on attempting to install Java from Oracle
+* 3,In Progress,Forgot password,jctetter,0,oit_staff,No Status
+- I forgot my password and can't log into NC State accounts
+- OIT staff member on call with support

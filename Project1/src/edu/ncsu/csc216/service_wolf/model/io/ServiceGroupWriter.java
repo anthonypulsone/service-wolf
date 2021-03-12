@@ -36,7 +36,7 @@ public class ServiceGroupWriter {
 					ServiceGroup current = list.get(i);
 					ArrayList<Incident> currentList = current.getIncidents();
 					fileWriter.println("# " + current.getServiceGroupName());
-					for (int j = 0; j < currentList.size(); )
+					for (int j = 0; j < currentList.size(); j++)
 					fileWriter.print(currentList.get(j).toString());
 				}
 			fileWriter.close();

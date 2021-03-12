@@ -81,15 +81,19 @@ public class ServiceWolfManager {
 	 * @return 2d Array of Incidents
 	 */
 	public String[][] getIncidentsAsArray() {
-		String[][] incidents = new String[currentServiceGroup.getIncidents().size()][4];
-		for (int i = 0; i < currentServiceGroup.getIncidents().size(); i++) {
-			Incident in = currentServiceGroup.getIncidents().get(i);
-			incidents[i][0] = Integer.toString(in.getId());
-			incidents[i][1] = in.getState();
-			incidents[i][2] = in.getTitle();
-			incidents[i][3] = in.getStatusDetails();
+		if (currentServiceGroup != null) {
+			String[][] incidents = new String[currentServiceGroup.getIncidents().size()][4];
+			for (int i = 0; i < currentServiceGroup.getIncidents().size(); i++) {
+				Incident in = currentServiceGroup.getIncidents().get(i);
+				incidents[i][0] = Integer.toString(in.getId());
+				incidents[i][1] = in.getState();
+				incidents[i][2] = in.getTitle();
+				incidents[i][3] = in.getStatusDetails();
+			}
+			return incidents;
+		} else {
+			return null;
 		}
-		return incidents;
 	}
 
 	/**
@@ -136,7 +140,7 @@ public class ServiceWolfManager {
 	/**
 	 * Constructs a new Incident and adds it to the current ServiceGroup
 	 * 
-	 * @param title    the title of the Incident
+	 * @param title   the title of the Incident
 	 * @param caller  the caller of the Incident
 	 * @param message the Incident message with details
 	 * @throws IllegalArgumentException if thrown and passed when constructing or
@@ -174,7 +178,11 @@ public class ServiceWolfManager {
 	 * @return name of ServiceGroup or null
 	 */
 	public String getServiceGroupName() {
-		return currentServiceGroup.getServiceGroupName();
+		if (currentServiceGroup != null) {
+			return currentServiceGroup.getServiceGroupName();
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -185,8 +193,11 @@ public class ServiceWolfManager {
 	 * @return a String[] containing the names of ServiceGroups
 	 */
 	public String[] getServiceGroupList() {
-		return null;
-
+		String[] names = new String[serviceGroups.size()];
+		for (int i = 0; i < serviceGroups.size(); i++) {
+			names[i] = serviceGroups.get(i).getServiceGroupName();
+		}
+		return names;
 	}
 
 	/**
@@ -210,7 +221,16 @@ public class ServiceWolfManager {
 	 * @param updateName the name that the ServiceGroup is being changed to
 	 */
 	public void editServiceGroup(String updateName) {
+		if (currentServiceGroup != null) {
+			checkDuplicateServiceName(updateName);
+			ServiceGroup temp = currentServiceGroup;
 
+			temp.setServiceGroupName(updateName);
+			deleteServiceGroup();
+			addServiceGroupToListByName(temp);
+			loadServiceGroup(temp.getServiceGroupName());
+
+		}
 	}
 
 	/**
@@ -221,12 +241,12 @@ public class ServiceWolfManager {
 	 * @param groupToAdd the ServiceGroup to be added
 	 */
 	private void addServiceGroupToListByName(ServiceGroup groupToAdd) {
-		String serviceGroupName = groupToAdd.getServiceGroupName();
+		String serviceGroupName = groupToAdd.getServiceGroupName().toLowerCase();
 		if (serviceGroups.size() == 0) {
 			serviceGroups.add(groupToAdd);
 		} else {
 			for (int i = 0; i < serviceGroups.size(); i++) {
-				String nameToCompare = serviceGroups.get(i).getServiceGroupName();
+				String nameToCompare = serviceGroups.get(i).getServiceGroupName().toLowerCase();
 				if (serviceGroupName.equals(nameToCompare)) {
 					throw new IllegalArgumentException("Invalid service group name.");
 				} else if (serviceGroupName.compareTo(nameToCompare) < 0) {
@@ -257,6 +277,7 @@ public class ServiceWolfManager {
 		checkDuplicateServiceName(serviceGroupName);
 		ServiceGroup s = new ServiceGroup(serviceGroupName);
 		addServiceGroupToListByName(s);
+		loadServiceGroup(s.getServiceGroupName());
 
 	}
 
@@ -268,11 +289,13 @@ public class ServiceWolfManager {
 	 * @throws IllegalArgumentException if name already exists
 	 */
 	private void checkDuplicateServiceName(String name) {
-		String serviceName = name.toLowerCase();
-		for (int i = 0; i < serviceGroups.size(); i++) {
-			String otherName = serviceGroups.get(i).getServiceGroupName().toLowerCase();
-			if (serviceName.equals(otherName)) {
-				throw new IllegalArgumentException("Invalid service group name.");
+		if (currentServiceGroup != null) {
+			String serviceName = name.toLowerCase();
+			for (int i = 0; i < serviceGroups.size(); i++) {
+				String otherName = serviceGroups.get(i).getServiceGroupName().toLowerCase();
+				if (serviceName.equals(otherName)) {
+					throw new IllegalArgumentException("Invalid service group name.");
+				}
 			}
 		}
 	}
@@ -289,13 +312,19 @@ public class ServiceWolfManager {
 	public void deleteServiceGroup() {
 		if (currentServiceGroup != null) {
 			for (int i = 0; i < serviceGroups.size(); i++) {
-				if (currentServiceGroup.getServiceGroupName().equals(serviceGroups.get(i).getServiceGroupName())) {
+				if (currentServiceGroup.getServiceGroupName()
+						.equals(serviceGroups.get(i).getServiceGroupName())) {
+					serviceGroups.remove(i);
 					if (serviceGroups.isEmpty()) {
 						currentServiceGroup = null;
+					} else {
+						
+						this.currentServiceGroup = serviceGroups.get(0);
 					}
-					this.currentServiceGroup = serviceGroups.get(0);
 				}
 			}
+		} else {
+			throw new IllegalArgumentException("No service group selected.");
 		}
 	}
 
