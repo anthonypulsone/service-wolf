@@ -601,6 +601,7 @@ public class Incident {
 				if (command.getCommand() == CommandValue.REOPEN) {
 					setStatusDetails(NO_STATUS);
 					addMessageToIncidentLog(command.getCommandMessage());
+					reopenCount++;
 					currentState = inProgressState;
 				} else if (command.getCommand() == CommandValue.CANCEL) {
 					setOwner(UNOWNED);

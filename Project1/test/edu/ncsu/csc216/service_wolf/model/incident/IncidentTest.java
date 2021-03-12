@@ -372,7 +372,19 @@ public class IncidentTest {
 				+ "- Jim, please help Billy again\n" + "- Billy, why did you do that?\n"
 				+ "- It wasn't working\n- That is a toaster, Billy. We don't support toasters\n",
 				i1.getIncidentLogMessages());
-
+		// in progress to resolved
+		Incident i2 = new Incident(4, "Resolved", "Broken Computer", "Jim", 0, "Tony", "No Status", log2);
+		Command c2 = new Command(CommandValue.RESOLVE, Incident.RESOLUTION_PERMANENTLY_SOLVED, "test message");
+		i2.update(c2);
+		assertEquals("Resolved", i2.getState());
+		assertEquals("Permanently Solved", i2.getStatusDetails());
+		Command c2a = new Command(CommandValue.REOPEN, null, "test message");
+		i2.update(c2a);
+		assertEquals("In Progress", i2.getState());
+		assertEquals("No Status", i2.getStatusDetails());
+		assertEquals(1, i2.getReopenCount());
+			
+		
 	}
 
 }
