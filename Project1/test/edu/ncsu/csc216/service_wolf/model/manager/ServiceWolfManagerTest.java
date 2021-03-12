@@ -5,7 +5,6 @@ package edu.ncsu.csc216.service_wolf.model.manager;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
@@ -16,15 +15,6 @@ import edu.ncsu.csc216.service_wolf.model.incident.Incident;
  *
  */
 public class ServiceWolfManagerTest {
-	
-	
-//	/** setup method */
-//	@Before
-//	public void setup() {
-//		
-//		ServiceWolfManager manager = ServiceWolfManager.getInstance();
-//		manager.loadFromFile("test-files/incidents1.txt");
-//	}
 	
 	/**
 	 * Test method for getInstance
