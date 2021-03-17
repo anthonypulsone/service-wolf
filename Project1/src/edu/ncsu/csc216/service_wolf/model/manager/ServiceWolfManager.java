@@ -201,9 +201,6 @@ public class ServiceWolfManager {
 	 * @return a String[] containing the names of ServiceGroups
 	 */
 	public String[] getServiceGroupList() {
-		if (currentServiceGroup) {
-			throw new IllegalArgumentException();
-		}
 		String[] names = new String[serviceGroups.size()];
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			names[i] = serviceGroups.get(i).getServiceGroupName();
