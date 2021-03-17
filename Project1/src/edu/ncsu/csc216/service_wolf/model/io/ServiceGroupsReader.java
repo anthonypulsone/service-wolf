@@ -46,7 +46,7 @@ public class ServiceGroupsReader {
 			System.out.println(nextToken);
 			System.out.println();
 			if(nextToken.charAt(0) == '-' || nextToken.charAt(0) == '*') {
-				throw new IllegalArgumentException();
+				return groupList;
 			}
 			//try {
 			groupList.add(processServiceGroup(nextToken));
