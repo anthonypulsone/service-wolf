@@ -203,8 +203,12 @@ public class ServiceWolfManager {
 	/**
 	 * Resets serviceGroup to an empty array list. The currentServiceGroup is set to
 	 * null.
+	 * @throws IllegalArgumentException if called when currentServiceGroup is null
 	 */
 	public void clearServiceGroups() {
+		if (currentServiceGroup != null) {
+			throw new IllegalArgumentException();
+		}
 		serviceGroups.clear();
 		currentServiceGroup = null;
 	}
