@@ -163,15 +163,19 @@ public class ServiceWolfManager {
 	 *                         to load
 	 */
 	public void loadServiceGroup(String serviceGroupName) {
+		System.out.println("CSG Before: " + currentServiceGroup.getServiceGroupName());
+		
 		for (int i = 0; i < serviceGroups.size(); i++) {
+			System.out.println(serviceGroups.get(i).getServiceGroupName());
+			System.out.println();
 			if (serviceGroupName.equals(serviceGroups.get(i).getServiceGroupName())) {
-				System.out.println(serviceGroups.get(i).getServiceGroupName());
-				System.out.println();
+				System.out.println("BINGO!   found: " + serviceGroupName);
 				currentServiceGroup = serviceGroups.get(i);
 				currentServiceGroup.setIncidentCounter();
 			}
-			System.out.println(serviceGroupName);
-			System.out.println(currentServiceGroup.getServiceGroupName());
+			
+			System.out.println("CSG After: " + currentServiceGroup.getServiceGroupName());
+			System.out.println();
 		}
 	}
 
