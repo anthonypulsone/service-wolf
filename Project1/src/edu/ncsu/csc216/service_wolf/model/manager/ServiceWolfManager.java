@@ -56,9 +56,6 @@ public class ServiceWolfManager {
 	 *                                  if currentServiceGroup is null
 	 */
 	public void saveToFile(String fileName) {
-		if (currentServiceGroup == null) {
-			throw new IllegalArgumentException();
-		}
 		ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
 	}
 
@@ -204,6 +201,9 @@ public class ServiceWolfManager {
 	 * @return a String[] containing the names of ServiceGroups
 	 */
 	public String[] getServiceGroupList() {
+		if (currentServiceGroup) {
+			throw new IllegalArgumentException();
+		}
 		String[] names = new String[serviceGroups.size()];
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			names[i] = serviceGroups.get(i).getServiceGroupName();
