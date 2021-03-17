@@ -45,10 +45,7 @@ public class ServiceGroupsReader {
 			String nextToken = fileReader.next();
 			System.out.println(nextToken);
 			System.out.println();
-			if(nextToken.charAt(0) == '-' || nextToken.charAt(0) == '*') {
-				groupList.clear();
-				return groupList;
-			}
+		
 			try {
 				groupList.add(processServiceGroup(nextToken));
 			} catch (IllegalArgumentException e) {
@@ -74,11 +71,11 @@ public class ServiceGroupsReader {
 		ServiceGroup group = new ServiceGroup(groupScanner.nextLine().trim());
 		groupScanner.useDelimiter("\\r?\\n?[*]");
 		while (groupScanner.hasNext()) {
-			try {
+			//try {
 				group.addIncident(processIncident(groupScanner.next()));
-			} catch (IllegalArgumentException e) {
-				continue;
-			}
+			//} catch (IllegalArgumentException e) {
+			//	continue;
+			//}
 		}
 
 		groupScanner.close();

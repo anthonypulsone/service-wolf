@@ -30,13 +30,13 @@ public class ServiceGroupsReaderTest {
 	 */
 	@Test
 	public void testReadServiceGroupsFile() {
-		//ArrayList<ServiceGroup> l = new ArrayList<ServiceGroup>();
-		
-		//assertEquals(0, l.size());
+		ArrayList<ServiceGroup> l = new ArrayList<ServiceGroup>();
+		l = ServiceGroupsReader.readServiceGroupsFile(validTestFile2);
+		assertEquals(0, l.size());
 		
 		
 		ArrayList<ServiceGroup> l2 = new ArrayList<ServiceGroup>();
-		
+		l2 = ServiceGroupsReader.readServiceGroupsFile(validTestFile3);
 		assertEquals(0, l2.size());
 		
 		
