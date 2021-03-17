@@ -165,9 +165,13 @@ public class ServiceWolfManager {
 	public void loadServiceGroup(String serviceGroupName) {
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			if (serviceGroupName.equals(serviceGroups.get(i).getServiceGroupName())) {
+				System.out.println(serviceGroups.get(i).getServiceGroupName());
+				System.out.println();
 				currentServiceGroup = serviceGroups.get(i);
 				currentServiceGroup.setIncidentCounter();
 			}
+			System.out.println(serviceGroupName);
+			System.out.println(currentServiceGroup.getServiceGroupName());
 		}
 	}
 
