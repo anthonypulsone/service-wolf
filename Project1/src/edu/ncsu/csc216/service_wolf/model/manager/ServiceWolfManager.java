@@ -232,7 +232,7 @@ public class ServiceWolfManager {
 	 */
 	public void editServiceGroup(String updateName) {
 		if (currentServiceGroup == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("No service group selected.");
 		}
 		checkDuplicateServiceName(updateName);
 		ServiceGroup temp = currentServiceGroup;
