@@ -164,7 +164,7 @@ public class ServiceWolfManager {
 	 * 
 	 * @param serviceGroupName the name of the ServiceGroup the user is attempting
 	 *                         to load
-	 * @throws IllegalArgumentException if not found
+	 * @throws IllegalArgumentException if service group not found
 	 */
 	public void loadServiceGroup(String serviceGroupName) {
 		boolean foundFlag = false;
@@ -252,6 +252,7 @@ public class ServiceWolfManager {
 	 * addServiceGroup
 	 * 
 	 * @param groupToAdd the ServiceGroup to be added
+	 * @throws IllegalArgumentException if service group can't be added
 	 */
 	private void addServiceGroupToListByName(ServiceGroup groupToAdd) {
 		String serviceGroupName = groupToAdd.getServiceGroupName().toLowerCase();
