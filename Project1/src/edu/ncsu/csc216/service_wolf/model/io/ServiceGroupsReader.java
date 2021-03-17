@@ -38,13 +38,21 @@ public class ServiceGroupsReader {
 		} catch (FileNotFoundException e) {
 			throw new IllegalArgumentException("Unable to load file.");
 		}
+		
 		fileReader.useDelimiter("\\r?\\n?[#]");
+		
 		while (fileReader.hasNext()) {
-			try {
-				groupList.add(processServiceGroup(fileReader.next()));
-			} catch (IllegalArgumentException e) {
-				continue;
+			String nextToken = fileReader.next();
+			System.out.println(nextToken);
+			System.out.println();
+			if(nextToken.charAt(0) == '-' || nextToken.charAt(0) == '*') {
+				throw new IllegalArgumentException();
 			}
+			//try {
+			groupList.add(processServiceGroup(nextToken));
+			//} catch (IllegalArgumentException e) {
+			//	continue;
+			//}
 
 		}
 
