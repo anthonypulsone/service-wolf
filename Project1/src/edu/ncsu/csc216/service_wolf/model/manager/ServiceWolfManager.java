@@ -38,7 +38,7 @@ public class ServiceWolfManager {
 	/**
 	 * Static method to return the singleton instance of ServiceWolfManager
 	 * 
-	 * @return ServiceWolfManager object
+	 * @return ServiceWolfManager object 
 	 */
 	public static ServiceWolfManager getInstance() {
 		if (singleton == null) {
@@ -206,9 +206,6 @@ public class ServiceWolfManager {
 	 * @throws IllegalArgumentException if called when currentServiceGroup is null
 	 */
 	public void clearServiceGroups() {
-		if (currentServiceGroup != null) {
-			throw new IllegalArgumentException();
-		}
 		serviceGroups.clear();
 		currentServiceGroup = null;
 	}
