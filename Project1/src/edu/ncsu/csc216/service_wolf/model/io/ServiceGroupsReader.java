@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
@@ -49,7 +50,7 @@ public class ServiceGroupsReader {
 		
 			try {
 				groupList.add(processServiceGroup(nextToken));
-			} catch (IllegalArgumentException e) {
+			} catch (IllegalArgumentException | NoSuchElementException e) {
 				groupList.clear();
 				return groupList;
 			}
