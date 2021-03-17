@@ -38,7 +38,7 @@ public class ServiceWolfManager {
 	/**
 	 * Static method to return the singleton instance of ServiceWolfManager
 	 * 
-	 * @return ServiceWolfManager object 
+	 * @return ServiceWolfManager object
 	 */
 	public static ServiceWolfManager getInstance() {
 		if (singleton == null) {
@@ -52,9 +52,13 @@ public class ServiceWolfManager {
 	 * ServiceGroupsWriter class.
 	 * 
 	 * @param fileName the fileName the user is writing the ServiceWolf data to
-	 * @throws IllegalArgumentException passed from the output method if thrown
+	 * @throws IllegalArgumentException passed from the output method if thrown or
+	 *                                  if currentServiceGroup is null
 	 */
 	public void saveToFile(String fileName) {
+		if (currentServiceGroup == null) {
+			throw new IllegalArgumentException();
+		}
 		ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
 	}
 
@@ -175,8 +179,7 @@ public class ServiceWolfManager {
 		if (!foundFlag) {
 			throw new IllegalArgumentException();
 		}
-		
-		
+
 	}
 
 	/**
@@ -211,6 +214,7 @@ public class ServiceWolfManager {
 	/**
 	 * Resets serviceGroup to an empty array list. The currentServiceGroup is set to
 	 * null.
+	 * 
 	 * @throws IllegalArgumentException if called when currentServiceGroup is null
 	 */
 	public void clearServiceGroups() {
@@ -307,6 +311,8 @@ public class ServiceWolfManager {
 					throw new IllegalArgumentException("Invalid service group name.");
 				}
 			}
+		} else {
+			throw new IllegalArgumentException();
 		}
 	}
 
@@ -328,7 +334,7 @@ public class ServiceWolfManager {
 					if (serviceGroups.isEmpty()) {
 						currentServiceGroup = null;
 					} else {
-						
+
 						this.currentServiceGroup = serviceGroups.get(0);
 					}
 				}
