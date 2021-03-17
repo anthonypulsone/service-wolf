@@ -55,6 +55,9 @@ public class ServiceWolfManager {
 	 * @throws IllegalArgumentException passed from the output method if thrown
 	 */
 	public void saveToFile(String fileName) {
+		if(currentServiceGroup == null || currentServiceGroup.getIncidents().size() == 0) {
+			throw new IllegalArgumentException("Unable to save file.");
+		}
 		ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
 	}
 
@@ -303,7 +306,6 @@ public class ServiceWolfManager {
 			if(name == null || "".equals(name)) {
 				throw new IllegalArgumentException("Invalid service group name.");
 			}
-			System.out.println(name);
 			String serviceName = name.toLowerCase();
 			for (int i = 0; i < serviceGroups.size(); i++) {
 				String otherName = serviceGroups.get(i).getServiceGroupName().toLowerCase();
