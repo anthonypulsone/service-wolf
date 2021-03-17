@@ -213,23 +213,32 @@ public class Incident {
 		if (state.equals(NEW_NAME) && this.statusDetails.equals(NO_STATUS)) {
 			this.currentState = newState;
 		} else if (state.equals(IN_PROGRESS_NAME) && this.statusDetails.equals(NO_STATUS)) {
-			if (owner.equals(UNOWNED)) {
+			if (!owner.equals(UNOWNED)) {
 				throw new IllegalArgumentException();
 			}
 			this.currentState = inProgressState;
 		} else if (state.equals(ON_HOLD_NAME) && (this.statusDetails.equals(HOLD_AWAITING_CALLER)
 				|| this.statusDetails.equals(HOLD_AWAITING_CHANGE)
 				|| this.statusDetails.equals(HOLD_AWAITING_VENDOR))) {
+			if (owner.equals(UNOWNED)) {
+				throw new IllegalArgumentException();
+			}
 			this.currentState = onHoldState;
 		} else if (state.equals(RESOLVED_NAME)
 				&& (this.statusDetails.equals(RESOLUTION_PERMANENTLY_SOLVED)
 						|| this.statusDetails.equals(RESOLUTION_WORKAROUND)
 						|| this.statusDetails.equals(RESOLUTION_CALLER_CLOSED))) {
+			if (owner.equals(UNOWNED)) {
+				throw new IllegalArgumentException();
+			}
 			this.currentState = resolvedState;
 		} else if (state.equals(CANCELED_NAME) && (this.statusDetails.equals(CANCELLATION_DUPLICATE)
 				|| this.statusDetails.equals(CANCELLATION_UNNECESSARY)
 				|| this.statusDetails.equals(CANCELLATION_NOT_AN_INCIDENT)
 				|| this.statusDetails.equals(CANCELLATION_CALLER_CANCELLED))) {
+			if (!owner.equals(UNOWNED)) {
+				throw new IllegalArgumentException();
+			}
 			this.currentState = canceledState;
 		} else {
 			throw new IllegalArgumentException();
