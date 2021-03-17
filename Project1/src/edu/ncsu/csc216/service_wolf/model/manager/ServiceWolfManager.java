@@ -163,20 +163,21 @@ public class ServiceWolfManager {
 	 *                         to load
 	 */
 	public void loadServiceGroup(String serviceGroupName) {
-		System.out.println("CSG Before: " + currentServiceGroup.getServiceGroupName());
 		
 		for (int i = 0; i < serviceGroups.size(); i++) {
 			System.out.println(serviceGroups.get(i).getServiceGroupName());
-			System.out.println();
 			if (serviceGroupName.equals(serviceGroups.get(i).getServiceGroupName())) {
 				System.out.println("BINGO!   found: " + serviceGroupName);
+				System.out.println();
 				currentServiceGroup = serviceGroups.get(i);
 				currentServiceGroup.setIncidentCounter();
 			}
-			
-			System.out.println("CSG After: " + currentServiceGroup.getServiceGroupName());
-			System.out.println();
 		}
+		System.out.println();
+		System.out.println("CSG After: " + currentServiceGroup.getServiceGroupName());
+		System.out.println();
+		System.out.println();
+		System.out.println();
 	}
 
 	/**
@@ -230,16 +231,16 @@ public class ServiceWolfManager {
 	 * @param updateName the name that the ServiceGroup is being changed to
 	 */
 	public void editServiceGroup(String updateName) {
-		if (currentServiceGroup != null) {
-			checkDuplicateServiceName(updateName);
-			ServiceGroup temp = currentServiceGroup;
-
-			temp.setServiceGroupName(updateName);
-			deleteServiceGroup();
-			addServiceGroupToListByName(temp);
-			loadServiceGroup(temp.getServiceGroupName());
-
+		if (currentServiceGroup == null) {
+			throw new IllegalArgumentException();
 		}
+		checkDuplicateServiceName(updateName);
+		ServiceGroup temp = currentServiceGroup;
+
+		temp.setServiceGroupName(updateName);
+		deleteServiceGroup();
+		addServiceGroupToListByName(temp);
+		loadServiceGroup(temp.getServiceGroupName());
 	}
 
 	/**
