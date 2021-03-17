@@ -43,13 +43,8 @@ public class ServiceGroupsReader {
 		fileReader.useDelimiter("\\r?\\n?[#]");
 		
 		while (fileReader.hasNext()) {
-			String nextToken = fileReader.next();
-			System.out.println(fileName);
-			System.out.println(nextToken);
-			System.out.println();
-		
 			try {
-				groupList.add(processServiceGroup(nextToken));
+				groupList.add(processServiceGroup(fileReader.next()));
 			} catch (IllegalArgumentException | NoSuchElementException e) {
 				groupList.clear();
 				return groupList;
