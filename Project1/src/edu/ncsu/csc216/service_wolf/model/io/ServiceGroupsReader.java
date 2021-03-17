@@ -43,6 +43,7 @@ public class ServiceGroupsReader {
 		
 		while (fileReader.hasNext()) {
 			String nextToken = fileReader.next();
+			System.out.println(fileName);
 			System.out.println(nextToken);
 			System.out.println();
 		
