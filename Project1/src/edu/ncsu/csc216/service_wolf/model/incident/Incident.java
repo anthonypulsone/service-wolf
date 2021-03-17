@@ -131,7 +131,7 @@ public class Incident {
 		setCaller(caller);
 		setReopenCount(reopenCount);
 		setOwner(owner);
-		if (incidentLog == null) {
+		if (incidentLog == null || incidentLog.size() == 0) {
 			throw new IllegalArgumentException();
 		}
 		this.incidentLog = incidentLog;
