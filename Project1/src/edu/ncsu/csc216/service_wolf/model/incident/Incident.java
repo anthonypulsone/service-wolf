@@ -211,9 +211,12 @@ public class Incident {
 			throw new IllegalArgumentException();
 		}
 		if (state.equals(NEW_NAME) && this.statusDetails.equals(NO_STATUS)) {
+			if (!owner.equals(UNOWNED)) {
+				throw new IllegalArgumentException();
+			}
 			this.currentState = newState;
 		} else if (state.equals(IN_PROGRESS_NAME) && this.statusDetails.equals(NO_STATUS)) {
-			if (!owner.equals(UNOWNED)) {
+			if (owner.equals(UNOWNED)) {
 				throw new IllegalArgumentException();
 			}
 			this.currentState = inProgressState;
