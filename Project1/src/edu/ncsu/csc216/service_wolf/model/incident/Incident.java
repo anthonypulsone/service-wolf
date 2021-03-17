@@ -213,6 +213,9 @@ public class Incident {
 		if (state.equals(NEW_NAME) && this.statusDetails.equals(NO_STATUS)) {
 			this.currentState = newState;
 		} else if (state.equals(IN_PROGRESS_NAME) && this.statusDetails.equals(NO_STATUS)) {
+			if (owner.equals(UNOWNED)) {
+				throw new IllegalArgumentException();
+			}
 			this.currentState = inProgressState;
 		} else if (state.equals(ON_HOLD_NAME) && (this.statusDetails.equals(HOLD_AWAITING_CALLER)
 				|| this.statusDetails.equals(HOLD_AWAITING_CHANGE)
