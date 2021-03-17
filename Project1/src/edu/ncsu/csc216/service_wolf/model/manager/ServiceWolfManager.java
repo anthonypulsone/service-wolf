@@ -300,6 +300,9 @@ public class ServiceWolfManager {
 	 */
 	private void checkDuplicateServiceName(String name) {
 		if (currentServiceGroup != null) {
+			if(name == null || "".equals(name)) {
+				throw new IllegalArgumentException();
+			}
 			System.out.println(name);
 			String serviceName = name.toLowerCase();
 			for (int i = 0; i < serviceGroups.size(); i++) {
