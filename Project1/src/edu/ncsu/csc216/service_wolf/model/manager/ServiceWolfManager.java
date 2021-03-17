@@ -161,23 +161,22 @@ public class ServiceWolfManager {
 	 * 
 	 * @param serviceGroupName the name of the ServiceGroup the user is attempting
 	 *                         to load
+	 * @throws IllegalArgumentException if not found
 	 */
 	public void loadServiceGroup(String serviceGroupName) {
-		
+		boolean foundFlag = false;
 		for (int i = 0; i < serviceGroups.size(); i++) {
-			System.out.println(serviceGroups.get(i).getServiceGroupName());
 			if (serviceGroupName.equals(serviceGroups.get(i).getServiceGroupName())) {
-				System.out.println("BINGO!   found: " + serviceGroupName);
-				System.out.println();
 				currentServiceGroup = serviceGroups.get(i);
 				currentServiceGroup.setIncidentCounter();
+				foundFlag = true;
 			}
 		}
-		System.out.println();
-		System.out.println("CSG After: " + currentServiceGroup.getServiceGroupName());
-		System.out.println();
-		System.out.println();
-		System.out.println();
+		if (!foundFlag) {
+			throw new IllegalArgumentException();
+		}
+		
+		
 	}
 
 	/**
@@ -229,6 +228,7 @@ public class ServiceWolfManager {
 	 * serviceGroupName) method.
 	 * 
 	 * @param updateName the name that the ServiceGroup is being changed to
+	 * @throws IllegalArgumentException if currentServiceGroup is null
 	 */
 	public void editServiceGroup(String updateName) {
 		if (currentServiceGroup == null) {
