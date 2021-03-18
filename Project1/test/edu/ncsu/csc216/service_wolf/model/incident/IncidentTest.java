@@ -226,94 +226,6 @@ public class IncidentTest {
 	}
 
 	/**
-	 * Test method for getId()
-	 */
-	@Test
-	public void testGetId() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for getTitle()
-	 */
-	@Test
-	public void testGetTitle() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for getState()
-	 */
-	@Test
-	public void testGetState() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for getCaller()
-	 */
-	@Test
-	public void testGetCaller() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for getReopenCount()
-	 */
-	@Test
-	public void testGetReopenCount() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for getOwner()
-	 */
-	@Test
-	public void testGetOwner() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for getStatusDetails()
-	 */
-	@Test
-	public void testGetStatusDetails() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for getIncidentLogMessage()
-	 */
-	@Test
-	public void testGetIncidentLogMessage() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for incrementCounter()
-	 */
-	@Test
-	public void testIncrementCounter() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for setCounter()
-	 */
-	@Test
-	public void testSetCounter() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for toString()
-	 */
-	@Test
-	public void testToString() {
-		fail("Not yet implemented");
-	}
-
-	/**
 	 * Test method for update()
 	 */
 	@Test
@@ -378,22 +290,42 @@ public class IncidentTest {
 		i2.update(c2);
 		assertEquals("Resolved", i2.getState());
 		assertEquals("Permanently Solved", i2.getStatusDetails());
+		// Resolved to reopen
 		Command c2a = new Command(CommandValue.REOPEN, null, "test message");
 		i2.update(c2a);
 		assertEquals("In Progress", i2.getState());
 		assertEquals("No Status", i2.getStatusDetails());
 		assertEquals(1, i2.getReopenCount());
+		// in progress to resolved
 		Command c2b = new Command(CommandValue.RESOLVE, Incident.CANCELLATION_CALLER_CANCELLED, "test message");
 		i2.update(c2b);
 		assertEquals("Resolved", i2.getState());
 		assertEquals("Caller Canceled", i2.getStatusDetails());
+		// resolved to canceled
 		Command c2c = new Command(CommandValue.CANCEL, Incident.CANCELLATION_CALLER_CANCELLED, "test message");
 		i2.update(c2c);
 		assertEquals("Canceled", i2.getState());
 		assertEquals("Unowned", i2.getOwner());
 		assertEquals(Incident.CANCELLATION_CALLER_CANCELLED, i2.getStatusDetails());
-		
-		
+		// attempt to update a cancelled incident (should fail and throw UOE)
+		Command c2d = new Command(CommandValue.REOPEN, null, "Can we reopen?");
+		try {
+			i2.update(c2d);
+			fail();
+		} catch (UnsupportedOperationException e) {
+			assertEquals("Canceled", i2.getState());
+			assertEquals("Unowned", i2.getOwner());
+			assertEquals(Incident.CANCELLATION_CALLER_CANCELLED, i2.getStatusDetails());
+		}
+		// On hold state test invalid update
+		Incident i3 = new Incident(4, "On Hold", "Broken Computer", "Jim", 0, "Tony", "Awaiting Caller", log2);
+		try {
+			i3.update(c2);
+			fail();
+		} catch (UnsupportedOperationException e) {
+			assertEquals("On Hold", i3.getState());
+			assertEquals("Tony", i3.getOwner());
+		}
 	}
 
 }

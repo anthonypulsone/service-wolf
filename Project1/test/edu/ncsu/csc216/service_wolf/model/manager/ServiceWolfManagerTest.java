@@ -5,8 +5,11 @@ package edu.ncsu.csc216.service_wolf.model.manager;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import edu.ncsu.csc216.service_wolf.model.command.Command;
+import edu.ncsu.csc216.service_wolf.model.command.Command.CommandValue;
 import edu.ncsu.csc216.service_wolf.model.incident.Incident;
 
 /**
@@ -15,6 +18,15 @@ import edu.ncsu.csc216.service_wolf.model.incident.Incident;
  *
  */
 public class ServiceWolfManagerTest {
+	/** manager singleton */
+	public ServiceWolfManager manager = ServiceWolfManager.getInstance();
+	
+	/** setup code to clear fields and data */
+	@Before
+	public void setup() {
+		manager.clearServiceGroups();
+		manager.resetManager();
+	}
 	
 	/**
 	 * Test method for getInstance
@@ -29,7 +41,13 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testSaveToFile() {
-		fail("Not yet implemented");
+		// try saving invalid file
+		try {
+			manager.saveToFile("bubba.txt");
+			fail();
+		} catch (IllegalArgumentException e) {
+			assertEquals("Unable to save file.", e.getMessage());
+		}
 	}
 
 	/**
@@ -37,7 +55,7 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testLoadFromFile() {
-		ServiceWolfManager manager = ServiceWolfManager.getInstance();
+		manager = ServiceWolfManager.getInstance();
 		try {
 			manager.loadFromFile("test-files/incidents1.txt");
 		} catch (IllegalArgumentException e) {
@@ -47,8 +65,7 @@ public class ServiceWolfManagerTest {
 		assertEquals("CSC IT", manager.getServiceGroupList()[0]);
 		assertEquals("ITECS", manager.getServiceGroupList()[1]);
 		assertEquals("OIT", manager.getServiceGroupList()[2]);
-		
-		manager.resetManager();
+	
 	}
 
 	/**
@@ -56,7 +73,7 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testGetIncidentsAsArray() {
-		ServiceWolfManager manager = ServiceWolfManager.getInstance();
+		manager = ServiceWolfManager.getInstance();
 		try {
 			manager.loadFromFile("test-files/incidents1.txt");
 		} catch (IllegalArgumentException e) {
@@ -73,7 +90,7 @@ public class ServiceWolfManagerTest {
 		assertEquals("Moodle down", a[1][2]);
 		assertEquals("No Status", a[1][3]);
 		assertEquals(4, a.length);
-		manager.resetManager();
+		
 	}
 
 	/**
@@ -81,7 +98,7 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testGetIncidentById() {
-		ServiceWolfManager manager = ServiceWolfManager.getInstance();
+		manager = ServiceWolfManager.getInstance();
 		try {
 			manager.loadFromFile("test-files/incidents1.txt");
 		} catch (IllegalArgumentException e) {
@@ -93,8 +110,6 @@ public class ServiceWolfManagerTest {
 		assertEquals("Moodle down", i.getTitle());
 		// id that doesn't exist
 		assertNull(manager.getIncidentById(100));
-		
-		manager.resetManager();
 	}
 
 	/**
@@ -102,7 +117,14 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testExecuteCommand() {
-		fail("Not yet implemented");
+		manager = ServiceWolfManager.getInstance();
+		manager.addServiceGroup("IT2");
+		manager.addIncidentToServiceGroup("Broken PC", "Jim", "PC is destroyed");
+		Command c1 = new Command(CommandValue.ASSIGN, "Joe", "Billy threw it out the window");
+		manager.executeCommand(1, c1);
+		assertEquals("In Progress", manager.getIncidentById(1).getState());
+		assertEquals("Jim", manager.getIncidentById(1).getCaller());
+		assertEquals("Joe", manager.getIncidentById(1).getOwner());
 	}
 
 	/**
@@ -110,7 +132,7 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testDeleteIncidentById() {
-		ServiceWolfManager manager = ServiceWolfManager.getInstance();
+		manager = ServiceWolfManager.getInstance();
 		try {
 			manager.loadFromFile("test-files/incidents1.txt");
 		} catch (IllegalArgumentException e) {
@@ -119,7 +141,6 @@ public class ServiceWolfManagerTest {
 		manager.loadServiceGroup("CSC IT");
 		manager.deleteIncidentById(3);
 		assertNull(manager.getIncidentById(3));
-		manager.resetManager();
 	}
 
 	/**
@@ -127,15 +148,11 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testAddIncidentToServiceGroup() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for loadServiceGroup
-	 */
-	@Test
-	public void testLoadServiceGroup() {
-		fail("Not yet implemented");
+		manager = ServiceWolfManager.getInstance();
+		manager.addServiceGroup("IT");
+		manager.addIncidentToServiceGroup("Broken PC", "Mike", "PC is destroyed");
+		assertEquals("Broken PC", manager.getIncidentById(1).getTitle());
+		assertEquals("Mike", manager.getIncidentById(1).getCaller());
 	}
 
 	/**
@@ -143,7 +160,7 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testGetServiceGroupName() {
-		ServiceWolfManager manager = ServiceWolfManager.getInstance();
+		manager = ServiceWolfManager.getInstance();
 		try {
 			manager.loadFromFile("test-files/incidents1.txt");
 		} catch (IllegalArgumentException e) {
@@ -152,24 +169,6 @@ public class ServiceWolfManagerTest {
 		manager.loadServiceGroup("CSC IT");
 		
 		assertEquals("CSC IT", manager.getServiceGroupName());
-		
-		manager.resetManager();
-	}
-
-	/**
-	 * Test method for getServiceGroupList
-	 */
-	@Test
-	public void testGetServiceGroupList() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for clearServiceGroups
-	 */
-	@Test
-	public void testClearServiceGroups() {
-		fail("Not yet implemented");
 	}
 
 	/**
@@ -177,7 +176,7 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testEditServiceGroup() {
-		ServiceWolfManager manager = ServiceWolfManager.getInstance();
+		manager = ServiceWolfManager.getInstance();
 		try {
 			manager.loadFromFile("test-files/incidents1.txt");
 		} catch (IllegalArgumentException e) {
@@ -188,9 +187,6 @@ public class ServiceWolfManagerTest {
 		manager.editServiceGroup("  X CSC IT DESK ");
 		assertEquals("X CSC IT DESK", manager.getServiceGroupName());
 		assertEquals("X CSC IT DESK", manager.getServiceGroupList()[2]);
-		
-		
-		manager.resetManager();
 	}
 
 	/**
@@ -198,15 +194,12 @@ public class ServiceWolfManagerTest {
 	 */
 	@Test
 	public void testAddServiceGroup() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for deleteServiceGroup
-	 */
-	@Test
-	public void testDeleteServiceGroup() {
-		fail("Not yet implemented");
+		manager = ServiceWolfManager.getInstance();
+		manager.addServiceGroup("IT");
+		assertEquals("IT", manager.getServiceGroupName());
+		manager.addServiceGroup("TECH");
+		assertEquals(2, manager.getServiceGroupList().length);
+		assertEquals("TECH", manager.getServiceGroupName());
 	}
 
 }

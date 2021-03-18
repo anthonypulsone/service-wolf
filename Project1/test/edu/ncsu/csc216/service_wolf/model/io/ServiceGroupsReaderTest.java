@@ -49,4 +49,13 @@ public class ServiceGroupsReaderTest {
 		
 	}
 	
+	/**
+	 * Test method for writeServiceGroupsToFile()
+	 */
+	@Test
+	public void testServiceGroupsReader() {
+		ServiceGroupsReader r = new ServiceGroupsReader();
+		assertNotNull(r);
+	}
+	
 }

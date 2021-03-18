@@ -97,38 +97,6 @@ public class ServiceGroupTest {
 	}
 
 	/**
-	 * Test method for addIncident
-	 */
-	@Test
-	public void testAddIncident() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for getIncidents
-	 */
-	@Test
-	public void testGetIncidents() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for getIncidentsById
-	 */
-	@Test
-	public void testGetIncidentsById() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for deleteIncidentById
-	 */
-	@Test
-	public void testDeleteIncidentById() {
-		fail("Not yet implemented");
-	}
-
-	/**
 	 * Test method for executeCommand
 	 */
 	@Test
@@ -138,8 +106,7 @@ public class ServiceGroupTest {
 		Command c1 = new Command(CommandValue.ASSIGN, "Joe", "Billy threw it out the window");
 		s.executeCommand(2, c1);
 		assertEquals("In Progress", i2.getState());
-		assertEquals("Joe", i2.getOwner());
-		
+		assertEquals("Joe", i2.getOwner());	
 	}
 
 }

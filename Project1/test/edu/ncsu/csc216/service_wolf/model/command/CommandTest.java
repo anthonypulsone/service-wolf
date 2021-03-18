@@ -145,7 +145,6 @@ public class CommandTest {
 		} catch (IllegalArgumentException e) {
 			assertNull(c14);
 		}
-		
 	}
 
 

@@ -64,6 +64,14 @@ public class ServiceGroupWriterTest {
 	}
 
 	/**
+	 * Test method for writeServiceGroupsToFile()
+	 */
+	@Test
+	public void testServiceGroupWriter() {
+		ServiceGroupWriter w = new ServiceGroupWriter();
+		assertNotNull(w);
+	}
+	/**
 	 * Helper method to compare two files for the same contents
 	 * 
 	 * @param expFile expected output

@@ -80,7 +80,7 @@ public class ServiceGroupsReader {
 	}
 
 	/**
-	 * Construcs the Incident objects for each ServiceGroup
+	 * Constructs the Incident objects for each ServiceGroup
 	 * 
 	 * @param incidentString String representation of an Incident
 	 * @return a constructed Incident object for the String
@@ -116,7 +116,7 @@ public class ServiceGroupsReader {
 			// catch any mismatch exception and throw IAE to caller
 		} catch (InputMismatchException e) {
 			throw new IllegalArgumentException();
-		} 
+		}
 
 	}
 }
