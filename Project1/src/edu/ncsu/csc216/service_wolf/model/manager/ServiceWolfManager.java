@@ -38,7 +38,7 @@ public class ServiceWolfManager {
 	/**
 	 * Static method to return the singleton instance of ServiceWolfManager
 	 * 
-	 * @return ServiceWolfManager object 
+	 * @return ServiceWolfManager object
 	 */
 	public static ServiceWolfManager getInstance() {
 		if (singleton == null) {
@@ -55,7 +55,7 @@ public class ServiceWolfManager {
 	 * @throws IllegalArgumentException passed from the output method if thrown
 	 */
 	public void saveToFile(String fileName) {
-		if(currentServiceGroup == null || currentServiceGroup.getIncidents().size() == 0) {
+		if (currentServiceGroup == null || currentServiceGroup.getIncidents().size() == 0) {
 			throw new IllegalArgumentException("Unable to save file.");
 		}
 		ServiceGroupWriter.writeServiceGroupsToFile(fileName, serviceGroups);
@@ -178,8 +178,7 @@ public class ServiceWolfManager {
 		if (!foundFlag) {
 			throw new IllegalArgumentException();
 		}
-		
-		
+
 	}
 
 	/**
@@ -214,6 +213,7 @@ public class ServiceWolfManager {
 	/**
 	 * Resets serviceGroup to an empty array list. The currentServiceGroup is set to
 	 * null.
+	 * 
 	 * @throws IllegalArgumentException if called when currentServiceGroup is null
 	 */
 	public void clearServiceGroups() {
@@ -304,7 +304,7 @@ public class ServiceWolfManager {
 	 */
 	private void checkDuplicateServiceName(String name) {
 		if (currentServiceGroup != null) {
-			if(name == null || "".equals(name)) {
+			if (name == null || "".equals(name)) {
 				throw new IllegalArgumentException("Invalid service group name.");
 			}
 			String serviceName = name.toLowerCase();
@@ -335,7 +335,7 @@ public class ServiceWolfManager {
 					if (serviceGroups.isEmpty()) {
 						currentServiceGroup = null;
 					} else {
-						
+
 						this.currentServiceGroup = serviceGroups.get(0);
 					}
 				}

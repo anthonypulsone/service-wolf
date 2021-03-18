@@ -78,9 +78,10 @@ public class Command {
 				throw new IllegalArgumentException();
 			}
 		}
-		// the rest of the command values should ALWAYS have commandInformation (not null)
+		// the rest of the command values should ALWAYS have commandInformation (not
+		// null)
 		else if (commandInformation == null || "".equals(commandInformation)) {
-				throw new IllegalArgumentException();
+			throw new IllegalArgumentException();
 		}
 		this.command = value;
 		this.commandInformation = commandInformation;
