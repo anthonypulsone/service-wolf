@@ -50,7 +50,7 @@ public class ServiceGroupsReaderTest {
 	}
 	
 	/**
-	 * Test method for writeServiceGroupsToFile()
+	 * Test method for serviceGroupseReader()
 	 */
 	@Test
 	public void testServiceGroupsReader() {

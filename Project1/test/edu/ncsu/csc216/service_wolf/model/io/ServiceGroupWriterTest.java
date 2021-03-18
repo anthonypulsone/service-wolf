@@ -64,7 +64,7 @@ public class ServiceGroupWriterTest {
 	}
 
 	/**
-	 * Test method for writeServiceGroupsToFile()
+	 * Test method for serviceGroupWriter()
 	 */
 	@Test
 	public void testServiceGroupWriter() {
