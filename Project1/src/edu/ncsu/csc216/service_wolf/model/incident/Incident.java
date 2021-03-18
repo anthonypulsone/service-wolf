@@ -380,9 +380,7 @@ public class Incident {
 	 * @param value the int value being assigned to the counter
 	 */
 	public static void setCounter(int value) {
-		if (value > Incident.counter) {
-			Incident.counter = value;
-		}
+		Incident.counter = value;
 	}
 
 	/**
