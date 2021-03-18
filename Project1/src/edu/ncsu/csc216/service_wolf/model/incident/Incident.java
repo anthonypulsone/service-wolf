@@ -164,7 +164,7 @@ public class Incident {
 			Incident.setCounter(incidentId + 1);
 		}
 		this.incidentId = incidentId;
-		Incident.incrementCounter();
+		// Incident.incrementCounter();
 	}
 
 	/**
@@ -380,7 +380,9 @@ public class Incident {
 	 * @param value the int value being assigned to the counter
 	 */
 	public static void setCounter(int value) {
-		Incident.counter = value;
+		if (value > Incident.counter) {
+			Incident.counter = value;
+		}
 	}
 
 	/**
